@@ -1,5 +1,6 @@
 import sys
 import os
+import configparser
 
 from ytApi import YtApi
 from db import Database
@@ -18,9 +19,7 @@ from PyQt6.QtWidgets import (
 class MainWindow(QDialog):
     def __init__(self):
         super().__init__()
-
         self.input_gui()
-        
         
     def input_gui(self):
 
@@ -68,10 +67,12 @@ class MainWindow(QDialog):
             },
             "settings"
         )
+        cred = db.get_cfg_data("settings") 
 
-        ytApi.set_api_key(yt_key)
-        ytApi.set_video_id(vid)
-        hfi.set_api_key(hfi_key)
+        #sets data using config file
+        ytApi.set_api_key(cred['yt_key'])
+        hfi.set_api_key(cred['hfi_key'])
+        ytApi.set_video_id(cred['vid'])
        
 
         if not os.path.isfile("ytCommentsData.json"):
@@ -80,6 +81,11 @@ class MainWindow(QDialog):
         else:
             print("ytCommentsData already exists.")
         
+        comments = db.get_filter_data()
+        result = hfi.run_analysis(comments, 'sentiment.json')
+        # db.save_json_data(result, 'sentiment')
+        print(result)
+
 
 
 
