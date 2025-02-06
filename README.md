@@ -1,1 +1,1 @@
-# YT-MoodAnalyzer-Tk
+# YT-MoodAnalyzer-Qt
