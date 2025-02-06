@@ -1,7 +1,7 @@
 import sys
 import os
 
-from ytApi import ytApi
+from ytApi import YtApi
 from db import Database
 from hfApi import HuggingFaceInferenceApi
 
@@ -66,7 +66,7 @@ class MainWindow(QDialog):
                 'hfi_key': hfi_key, 
                 'vid': vid
             },
-            "settings.cfg"
+            "settings"
         )
 
         ytApi.set_api_key(yt_key)
