@@ -9,15 +9,18 @@ class Database:
         config.add_section('main')
         for item in data:
             config.set('main', item, data[item])
-            
+
         with open(f'{fname}.cfg', "w") as f:
             config.write(f)
 
     def save_json_data(self, data, fname):
-        with open("fname.json", "w") as f:
+        with open(f"{fname}.json", "w") as f:
             json.dump(data, f, indent=4)
 
-    def get_filter_data(self): #To get comments only
+    def get_filter_data(self): #
+        '''
+        To get comments only
+        '''
         try:
             with open("ytComments.json", "r") as fcmnts: 
                 comments = json.load(fcmnts)
@@ -38,3 +41,8 @@ class Database:
             else:
                 print("Error: Cannot filter ytCommentsData.")
                 return -1
+
+    def get_cfg_data(self, fname):
+        config = configparser.RawConfigParser()
+        config.read(f'{fname}.cfg')
+        return dict(config.items("main"))
